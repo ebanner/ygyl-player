@@ -1,5 +1,21 @@
 {
     "*": [
-        "python manage.py runserver"
+        "python manage.py runserver 8080"
+    ],
+
+    "lucky/views.index": [
+        "python manage.py test lucky.tests.LuckyIndexViewTests.test_webm"
+    ],
+
+    "lucky/tests": [
+        "python manage.py test lucky"
+    ],
+
+    "lucky/tests.LuckyIndexViewTests.test_webm": [
+        "python manage.py test lucky"
+    ],
+
+    "lucky/tests.LuckyIndexViewTests.test_video": [
+        "python manage.py test lucky"
     ]
 }
