@@ -1,21 +1,19 @@
 {
-    "*": [
-        "python manage.py runserver 8080"
+    "tests": {
+        "runner": "python manage.py test",
+        "directory": "lucky/tests"
+    },
+
+    "lazy-commands": {},
+
+    "testable": [
+        "lucky/views.index",
+        "lucky/views.get_ygyl_id"
     ],
 
-    "lucky/views.index": [
-        "python manage.py test lucky.tests.LuckyIndexViewTests.test_webm"
-    ],
+    "module-commands": {
+        "lucky/*": "python manage.py runserver 8080",
+        "ygyl/*": "python manage.py runserver 8080"
+    }
 
-    "lucky/tests": [
-        "python manage.py test lucky"
-    ],
-
-    "lucky/tests.LuckyIndexViewTests.test_webm": [
-        "python manage.py test lucky"
-    ],
-
-    "lucky/tests.LuckyIndexViewTests.test_video": [
-        "python manage.py test lucky"
-    ]
 }
