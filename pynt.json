@@ -1,19 +1,19 @@
 {
-    "tests": {
-        "runner": "python manage.py test",
-        "directory": "lucky/tests"
-    },
-
-    "lazy-commands": {},
-
-    "testable": [
-        "lucky/views.index",
-        "lucky/views.get_ygyl_id"
-    ],
-
-    "module-commands": {
-        "lucky/*": "python manage.py runserver 8080",
-        "ygyl/*": "python manage.py runserver 8080"
-    }
-
+  "tests": {
+    "runner": "python manage.py test",
+    "directory": "lucky/tests"
+  },
+  "lazy-commands": {
+    "lucky/views.download_webm_url": "ein:connect-run-or-eval-buffer",
+    "lucky/views.get_webm_url": "ein:connect-run-or-eval-buffer",
+    "lucky/views.get_ygyl_thread_posts": "ein:connect-run-or-eval-buffer"
+  },
+  "testable": [
+    "lucky/views.index",
+    "lucky/views.get_ygyl_id"
+  ],
+  "module-commands": {
+    "lucky/*": "python manage.py runserver 8080",
+    "ygyl/*": "python manage.py runserver 8080"
+  }
 }
