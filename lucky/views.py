@@ -1,3 +1,4 @@
+import random
 import urllib
 
 import requests
@@ -38,12 +39,53 @@ def get_ygyl_thread_posts():
     thread = requests.get(f'https://a.4cdn.org/gif/thread/{ygyl_id}.json').json()
     return thread['posts']
 
-def download_webm():
+def download_webm(lucky=True, dirpath='lucky/static/lucky', filename='example.webm'):
+    """Download a YGYL webm
+
+    Arguments:
+        lucky (bool): pick a random webm if True and the first one otherwise
+        dirpath (str): path to save the webm in
+        filename (str): name to give to the downloaded webm
+
+    """
     posts = get_ygyl_thread_posts()
-    post = posts[0]
+    post = pick_random_post(posts) if lucky else pick_first_post(posts)
     tim = post['tim']
     webm_url = f'http://i.4cdn.org/gif/{tim}.webm'
-    urllib.request.urlretrieve(webm_url, filename='lucky/static/lucky/example.webm')
+    path, response = urllib.request.urlretrieve(webm_url, f'{dirpath}/{filename}')
+    return response
+
+def pick_first_post(posts):
+    """Pick the first post
+
+    Arguments:
+        posts (dict): posts in a YGYL thread
+
+    The winning post must have a webm attached to it.
+
+    >>> posts = get_ygyl_thread_posts()
+
+    """
+    for post in posts:
+        if post.get('ext', None) == '.webm':
+            return post
+
+def pick_random_post(posts):
+    """Pick a random post
+
+    Arguments:
+        posts (dict): posts in a YGYL thread
+
+    The winning post must have a webm attached to it.
+
+    >>> posts = get_ygyl_thread_posts()
+
+    """
+    while True:
+        post = random.choice(posts)
+        if post.get('ext', None) == '.webm':
+            break
+    return post
 
 def loop():
     pass
