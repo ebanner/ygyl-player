@@ -26,9 +26,10 @@
 
 (defn fetch-webm
   "Download a webm.
-  When theh download finishes update the application state so it will be
-  rendered immediately. Currently use a cache-buster so the browser picks up on
-  the change (FIXME do better)."
+  When theh download finishes update the application state so that the webm
+  component will be re-rendered immediately and the new webm will show up.
+  Currently use a cache-buster so the browser picks up on the change (FIXME do
+  better)."
   []
   (go (let [response (<! (http/post server-endpoint
                                     {:with-credentials? false
