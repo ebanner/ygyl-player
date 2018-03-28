@@ -2,54 +2,89 @@
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [reagent.core :as r]
             [cljs-http.client :as http]
-            [cljs.core.async :refer [<!]]))
+            [cljs.core.async :refer [<!]]
+            [clojure.string :as str]))
+
+;; -------------------------
+;; Constants
+
+(def webm-basename
+  "The basename of the webm url on the server."
+  "ygyl.webm")
+
+(def server-endpoint
+  "The basename of the webm url on the server."
+  "http://localhost:8000/lucky/")
 
 ;; -------------------------
 ;; Application State
 
-(defonce webm (r/atom "a.webm"))
+(defonce webm-state (r/atom {:source nil :url nil}))
 
 ;; -------------------------
 ;; Helper Functions
 
-(defn next-webm-name
-  "Get the next webm name.
-  There are only two webm names. It's either \"a.webm\" or \"b.webm\". These two
-  cycle back and forth. It does not take any arguments, rather it looks at the
-  global atom which contains the current webm name."
+(defn fetch-webm
+  "Download a webm.
+  When theh download finishes update the application state so it will be
+  rendered immediately. Currently use a cache-buster so the browser picks up on
+  the change (FIXME do better)."
   []
-  (if (= @webm "a.webm")
-    "b.webm"
-    "a.webm"))
-
-(defn swap-and-prefetch-webm
-  "Swap the next webm in the DOM and download the next one.
-  This function is called when a webm ends. Swapping the webm in the DOM
-  triggers another webm to start. We immediately prefetch another webm so that
-  when this one ends the next one starts immediately."
-  []
-  (swap! webm #(next-webm-name))
-  (go (let [response (<! (http/post "http://localhost:8000/lucky/"
+  (go (let [response (<! (http/post server-endpoint
                                     {:with-credentials? false
-                                     :json-params {:filename (next-webm-name)}}))]
-        (js/console.log response))))
+                                     :json-params {:filename webm-basename}}))]
+        (reset! webm-state {:source (:url (:body response))
+                            :url (str webm-basename "?t=" (.getTime (js/Date.)))}))))
 
 ;; -------------------------
 ;; Componenets
 
-(defn home-page
-  "It's the home page component.
-  It's a single video webm element. Make sure to swap out the current webm with
-  the next one when it finishes."
-  []
+(defn video-player
+  "A single html video element containing the webm.
+  Auto-play the webm and fetch the next webm when on end."
+  [url source]
   [:video {:controls true
            :id "webm"
-           :on-ended #(swap-and-prefetch-webm)
-           :src @webm
+           :on-ended (fn []
+                       (swap! webm-state assoc :url nil)
+                       (fetch-webm))
+           :src url
            :auto-play true}])
+
+(defn caption
+  "Text under the webm.
+  Displays the source per
+  https://github.com/4chan/4chan-API#api-terms-of-service."
+  [url source]
+  [:div
+   [:a {:href source} "source"]])
+
+(defn webm
+  "Parent component for webm and caption.
+  Because webm and caption need to be synchronized we push the state up into its
+  parent and send the state down on a render. The first time this component is
+  rendered we will not have downloaded a webm yet. In that case display a
+  loading message."
+  []
+  (let [{:keys [url source]} @webm-state]
+    (if url
+      [:div
+       [video-player url source]
+       [caption url source]]
+      [:p "Fetching something groovy..."])))
+
+(defn app
+  "Top-level entry component."
+  []
+  [:div
+   [:h1 "YGYL Player"]
+   [webm]])
 
 ;; -------------------------
 ;; Initialize app
 
-(defn init! []
-  (r/render [home-page] (.getElementById js/document "app")))
+(defn init!
+  "Make sure you fetch a webm and then render the component when you are done."
+  []
+  (r/render [app] (js/document.getElementById "app"))
+  (fetch-webm))
