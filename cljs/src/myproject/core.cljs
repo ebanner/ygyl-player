@@ -14,12 +14,12 @@
 
 (def server-endpoint
   "The basename of the webm url on the server."
-  "http://localhost:8000/lucky/")
+  "http://localhost:8000/lucky/webm")
 
 ;; -------------------------
 ;; Application State
 
-(defonce webm-state (r/atom {:source nil :url nil}))
+(defonce webm-source (r/atom nil))
 
 ;; -------------------------
 ;; Helper Functions
@@ -31,11 +31,9 @@
   Currently use a cache-buster so the browser picks up on the change (FIXME do
   better)."
   []
-  (go (let [response (<! (http/post server-endpoint
-                                    {:with-credentials? false
-                                     :json-params {:filename webm-basename}}))]
-        (reset! webm-state {:source (:url (:body response))
-                            :url (str webm-basename "?t=" (.getTime (js/Date.)))}))))
+  (go (let [response (<! (http/get server-endpoint
+                                    {:with-credentials? false}))]
+        (reset! webm-source (:url (:body response))))))
 
 ;; -------------------------
 ;; Componenets
@@ -43,20 +41,20 @@
 (defn video-player
   "A single html video element containing the webm.
   Auto-play the webm and fetch the next webm when on end."
-  [url source]
+  [source]
   [:video {:controls true
            :id "webm"
            :on-ended (fn []
-                       (swap! webm-state assoc :url nil)
+                       (reset! webm-source nil) ; trigger the loading message
                        (fetch-webm))
-           :src url
+           :src source
            :auto-play true}])
 
 (defn caption
   "Text under the webm.
   Displays the source per
   https://github.com/4chan/4chan-API#api-terms-of-service."
-  [url source]
+  [source]
   [:div
    [:a {:href source} "source"]])
 
@@ -67,12 +65,11 @@
   rendered we will not have downloaded a webm yet. In that case display a
   loading message."
   []
-  (let [{:keys [url source]} @webm-state]
-    (if url
-      [:div
-       [video-player url source]
-       [caption url source]]
-      [:p "Fetching something groovy..."])))
+  (if @webm-source
+    [:div
+     [video-player @webm-source]
+     [caption @webm-source]]
+    [:p "Fetching something groovy..."]))
 
 (defn app
   "Top-level entry component."
