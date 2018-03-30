@@ -1,1 +1,1 @@
-web: gunicorn lucky.wsgi
+web: gunicorn ygyl.wsgi

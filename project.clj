@@ -1,6 +1,6 @@
 (defproject myproject "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Web app for browsing the latest You Groove You Lose (YGYL) thread."
+  :url "https://github.com/ebanner/YGYL/"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
@@ -19,34 +19,36 @@
    [:cljsbuild :builds :app :compiler :output-dir]
    [:cljsbuild :builds :app :compiler :output-to]]
 
-  :resource-paths ["lucky/static/lucky"]
+  :resource-paths ["static"]
 
   :figwheel {:http-server-root "."
              :nrepl-port 7002
              :nrepl-middleware ["cemerick.piggieback/wrap-cljs-repl"]
-             :css-dirs ["lucky/static/lucky/css"]}
+             :css-dirs ["static/css"]}
 
   :cljsbuild {:builds {:app
                        {:source-paths ["cljs/src" "cljs/env/dev/cljs"]
                         :compiler
                         {:main "myproject.dev"
-                         :output-to "lucky/static/lucky/js/app.js"
-                         :output-dir "lucky/static/lucky/js/out"
+                         :output-to "static/js/app.js"
+                         :output-dir "static/js/out"
                          :asset-path   "js/out"
                          :source-map true
                          :optimizations :none
-                         :pretty-print  true}
+                         :pretty-print  true
+                         :target :nodejs}
                         :figwheel
                         {:on-jsload "myproject.core/mount-root"
                          :open-urls ["http://localhost:3449/index.html"]}}
                        :release
                        {:source-paths ["cljs/src" "cljs/env/prod/cljs"]
                         :compiler
-                        {:output-to "lucky/static/lucky/js/app.js"
-                         :output-dir "lucky/static/lucky/js/release"
+                        {:output-to "static/js/app.js"
+                         :output-dir "static/js/release"
                          :asset-path   "js/out"
-                         :optimizations :advanced
-                         :pretty-print false}}}}
+                         :optimizations :simple
+                         :pretty-print false
+                         :target :nodejs}}}}
 
   :aliases {"package" ["do" "clean" ["cljsbuild" "once" "release"]]}
 
