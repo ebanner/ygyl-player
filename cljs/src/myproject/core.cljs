@@ -12,9 +12,7 @@
   "The basename of the webm url on the server."
   "ygyl.webm")
 
-(def server-endpoint
-  "The basename of the webm url on the server."
-  "http://localhost/lucky/webm")
+(goog-define server-endpoint "http://localhost:8000/lucky/webm")
 
 ;; -------------------------
 ;; Application State
@@ -31,6 +29,7 @@
   Currently use a cache-buster so the browser picks up on the change (FIXME do
   better)."
   []
+  (js/console.log "Fetching from" server-endpoint "...")
   (go (let [response (<! (http/get server-endpoint
                                     {:with-credentials? false}))]
         (reset! webm-source (:url (:body response))))))

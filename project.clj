@@ -46,7 +46,8 @@
                          :output-dir "static/js/release"
                          :asset-path   "js/out"
                          :optimizations :advanced
-                         :pretty-print false}}}}
+                         :pretty-print false
+                         :closure-defines {myproject.core/server-endpoint "https://sleepy-meadow-97796.herokuapp.com/lucky/webm"}}}}}
 
   :aliases {"package" ["do" "clean" ["cljsbuild" "once" "release"]]}
 
