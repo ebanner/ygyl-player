@@ -14,7 +14,7 @@
 
 (def server-endpoint
   "The basename of the webm url on the server."
-  "http://localhost:5000/lucky/webm")
+  "http://localhost/lucky/webm")
 
 ;; -------------------------
 ;; Application State
