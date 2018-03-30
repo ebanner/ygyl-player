@@ -25,7 +25,9 @@ SECRET_KEY = 'ru25tik_*wb!y%pbw=o)j@h19@aonm0+y48)yks+02h4*ck2la'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'sleepy-meadow-97796.herokuapp.com'
+]
 
 CORS_ORIGIN_ALLOW_ALL = True
 
