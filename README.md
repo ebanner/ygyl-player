@@ -14,7 +14,7 @@ If you want to leave the app open in a tab and autoplay webms ad infinitum then 
 
 ## Credits
 
-- Built with [Django](https://www.djangoproject.com/) and [ClojureScript](https://www.google.com/search?q=clojurescript&oq=clojurescript&aqs=chrome..69i57j69i60l3j0j69i65.2318j0j4&sourceid=chrome&ie=UTF-8).
+- Built with [Django](https://www.djangoproject.com/) and [reagent](https://reagent-project.github.io/).
 - Developed with [pynt](https://github.com/ebanner/pynt).
 - Deployed with [Heroku](https://www.heroku.com).
 
