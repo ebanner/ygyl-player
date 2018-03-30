@@ -1,4 +1,4 @@
-# YGYL
+# ygyl-player
 
 Web app for pulling a random webm from the latest [*You Groove You Lose* (YGYL)](https://www.urbandictionary.com/define.php?term=ygyl) thread
 
