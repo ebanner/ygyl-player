@@ -12,6 +12,8 @@ This app uses the [4chan API](https://github.com/4chan/4chan-API) to identify th
 
 If you want to leave the app open in a tab and autoplay webms ad infinitum then use firefox. Chrome will not autoplay webms.
 
+It does not work on Safari last I checked.
+
 ## Credits
 
 - Built with [Django](https://www.djangoproject.com/) and [reagent](https://reagent-project.github.io/).
