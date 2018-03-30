@@ -35,8 +35,7 @@
                          :asset-path   "js/out"
                          :source-map true
                          :optimizations :none
-                         :pretty-print  true
-                         :target :nodejs}
+                         :pretty-print  true}
                         :figwheel
                         {:on-jsload "myproject.core/mount-root"
                          :open-urls ["http://localhost:3449/index.html"]}}
@@ -46,9 +45,8 @@
                         {:output-to "static/js/app.js"
                          :output-dir "static/js/release"
                          :asset-path   "js/out"
-                         :optimizations :simple
-                         :pretty-print false
-                         :target :nodejs}}}}
+                         :optimizations :advanced
+                         :pretty-print false}}}}
 
   :aliases {"package" ["do" "clean" ["cljsbuild" "once" "release"]]}
 
