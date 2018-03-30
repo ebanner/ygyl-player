@@ -1,6 +1,6 @@
 # ygyl-player
 
-Web app for pulling a random webm from the latest [*You Groove You Lose* (YGYL)](https://www.urbandictionary.com/define.php?term=ygyl) thread
+Web app for playing a random webm from the latest [*You Groove You Lose* (YGYL)](https://www.urbandictionary.com/define.php?term=ygyl) thread
 
 Currently hosted at https://sleepy-meadow-97796.herokuapp.com/static/index.html
 
@@ -10,7 +10,7 @@ This app uses the [4chan API](https://github.com/4chan/4chan-API) to identify th
 
 ## Browser Differences
 
-If you want to leave the app open in a tab and autoplay webms ad infinitum then use firefox. Chrome will not autoplay each webm. 
+If you want to leave the app open in a tab and autoplay webms ad infinitum then use firefox. Chrome will not autoplay webms.
 
 ## Credits
 
