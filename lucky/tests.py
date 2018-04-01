@@ -6,15 +6,15 @@ import lucky.views
 
 # Create your tests here.
 
-class LuckyIndexViewTests(TestCase):
+class LuckyWebmViewTests(TestCase):
     def test_webm(self):
-        url = reverse('lucky:index')
+        url = reverse('lucky:webm')
         response = self.client.get(url)
         html = response.content.decode()
         self.assertIn('webm', html)
 
     def test_video(self):
-        url = reverse('lucky:index')
+        url = reverse('lucky:webm')
         response = self.client.get(url)
         html = response.content.decode()
         self.assertIn('video', html)
