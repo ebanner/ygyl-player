@@ -1,13 +1,13 @@
-from django.shortcuts import render
 import json
 import random
 import urllib
 
-import requests
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+
+import requests
 
 
 @csrf_exempt
