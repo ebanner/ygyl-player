@@ -2,8 +2,6 @@
 
 Web app for playing a random webm from the latest [*You Groove You Lose* (YGYL)](https://www.urbandictionary.com/define.php?term=ygyl) thread
 
-Currently hosted at https://sleepy-meadow-97796.herokuapp.com/static/index.html
-
 ## About
 
 This app uses the [4chan API](https://github.com/4chan/4chan-API) to identify the latest [*You Groove You Lose* (YGYL)](https://www.urbandictionary.com/define.php?term=ygyl) thread then plays a random webm from it. My use case is to launch and leave it open in a tab. After the current webm finishes another one will be fetched and played.
